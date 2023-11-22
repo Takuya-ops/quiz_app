@@ -110,11 +110,11 @@ function HelloWorld(props) {
           onChange={(event) => setLastName(event.target.value)}
         />
 
-        <form autoComplete="off">
+        {/* <form autoComplete="off">
           <div className="mb-3">
             <label className="form-label" htmlFor="date">日付</label>
             <input
-              type="text"
+              type="date"
               name="date"
               id="date"
               autoComplete="date-new"
@@ -122,14 +122,25 @@ function HelloWorld(props) {
               onChange={(event) => setDate(event.target.value)}
             ></input>
           </div>
-        </form>
+        </form> */}
+
+        <Input
+          type="date"
+          name="date"
+          title="日付"
+          autoComplete="date-new"
+          className="form-control"
+          onChange={(event) => setDate(event.target.value)}
+        />
 
         <div>
           First Name: {firstName}<br/>
           Last Name: {lastName}<br/>
           Date: {date}<br/>
         </div>
-        <hr/>
+
+        <hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
+   
     </Fragment>
   )
 }
