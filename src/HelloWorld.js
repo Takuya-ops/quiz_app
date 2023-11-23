@@ -26,7 +26,7 @@ function HelloWorld(props) {
 
 
   useEffect(() => {
-    // console.log("Hello useEffect!")
+    // console.log("Hello,useEffect!")
 
     let people = [
       {
