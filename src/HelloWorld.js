@@ -33,7 +33,7 @@ function HelloWorld(props) {
         id: 1,
         firstName: "Takuya",
         lastName: "Hotta",
-        date: "1997-05-02",
+        date: "1996-05-02",
       },
       {
         id: 1,
