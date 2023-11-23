@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import "./HelloWorld.css";
 import Input from "./Input";
 
@@ -11,6 +11,9 @@ function HelloWorld(props) {
   const [lastName, setLastName] = useState("")
   const [date, setDate] = useState("")
 
+  const firstNameRef = useRef()
+  const lastNameRef = useRef()
+  const dateRef = useRef()
   
   const toggleTrue = () => {
     if (isTrue) {
@@ -42,6 +45,47 @@ function HelloWorld(props) {
     setCrowd(people)
   }, [])
 
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // console.log(firstName, lastName, date)
+    if (lastName !== "") {
+      addPerson(firstName, lastName, Date);
+
+    }
+  }
+
+  // 新規ユーザーの追加
+  const addPerson = (newFirst, newLast, newDate) => {
+    let newPerson = {
+      id: crowd.length + 1,
+      firstName: newFirst,
+      lastName: newLast,
+      date: newDate,
+    }
+    const newList = crowd.concat(newPerson)
+
+    const sorted = newList.sort((a, b) => {
+      if (a.lastName < b.lastName) {
+        return -1;
+      } else if (a.lastName > b.lastName) {
+        return 1
+      }
+      return 0
+    })
+
+    setCrowd(sorted)
+    setFirstName("")
+    setLastName("")
+    setDate("")
+
+    firstNameRef.current.value = ""
+    lastNameRef.current.value = ""
+    dateRef.current.value = ""
+
+  }
+
   return (
     <Fragment>
       <hr/>
@@ -67,24 +111,25 @@ function HelloWorld(props) {
       <hr/>
       <h3>達成者</h3>
       <ul className="list-group">
-        {crowd.map((n) => (
-          <li key={n.id} className="list-group-item">{n.firstName} {n.lastName} completed these question!</li>
+        {crowd.map((n, index) => (
+          <li key={index} className="list-group-item">{n.firstName} {n.lastName} completed these question!</li>
         ))}
       </ul>
       <hr/>
-        <form autoComplete="off">
+        <form autoComplete="off" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label" htmlFor="first-name">名前</label>
             <input
               type="text"
               name="first-name"
               id="first-name"
+              ref={firstNameRef}
               autoComplete="first-name-new"
               className="form-control"
               onChange={(event) => setFirstName(event.target.value)}
             ></input>
           </div>
-        </form>
+        
 
         {/* <form autoComplete="off">
           <div className="mb-3">
@@ -105,6 +150,7 @@ function HelloWorld(props) {
           type="text"
           name="last-name"
           title="名字"
+          ref={lastNameRef}
           autoComplete="last-name-new"
           className="form-control"
           onChange={(event) => setLastName(event.target.value)}
@@ -128,10 +174,14 @@ function HelloWorld(props) {
           type="date"
           name="date"
           title="日付"
+          ref={dateRef}
           autoComplete="date-new"
           className="form-control"
           onChange={(event) => setDate(event.target.value)}
         />
+
+        <input type="submit" value="Submit" className="btn btn-primary"></input>
+        </form>
 
         <div>
           First Name: {firstName}<br/>
@@ -139,7 +189,7 @@ function HelloWorld(props) {
           Date: {date}<br/>
         </div>
 
-        <hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/><hr/>
+        <hr/>
    
     </Fragment>
   )
